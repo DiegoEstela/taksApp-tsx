@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 
+type FormElement = React.FormEvent<HTMLFormElement>;
 
 function App() {
-  const [newTask, setNewtask] = useState("")
+  const [newTask, setNewtask] = useState<string>("")
+  const [tasks, setTasks] = useState([])
+
+  const handleSumbit = (e: FormElement) => {
+    e.preventDefault()
+    console.log(newTask)
+  }
   return (
     <>
-      <h1>hola</h1>
+      <form onSubmit={handleSumbit}>
+        <input type="text" onChange={e => setNewtask(e.target.value)} />
+        <button>
+          Save
+        </button>
+      </form>
     </>
   );
 }
