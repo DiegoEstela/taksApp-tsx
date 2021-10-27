@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./App.css"
 
 type FormElement = React.FormEvent<HTMLFormElement>;
 interface ITask {
@@ -22,9 +23,22 @@ function App() {
     setTasks(newTasks);
     setNewtask("")
   }
+
+  const toggleDoneTask = (i: number) => {
+    const newTasks: ITask[] = [...tasks];
+    newTasks[i].done = !newTasks[i].done;
+    setTasks(newTasks);
+  }
+
+  const removeTask = (i: number) => {
+    const newTasks: ITask[] = [...tasks];
+    newTasks.splice(i, 1)
+    setTasks(newTasks)
+
+  }
   return (
     <>
-      <div className="container p-4">
+      <div className="container" >
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <div className="card text-white bg-primary shadow p-3 mb-2  " >
@@ -44,8 +58,16 @@ function App() {
             {
               tasks.map((t: ITask, i: number) => (
                 <div className="card card-body mt-2" key={i}>
-                  <h2>{t.name}</h2>
-                  <p>{t.done} </p>
+                  <h2 style={{ textDecoration: t.done ? 'line-through' : "" }}>Tarea {i + 1}: {t.name}</h2>
+                  <p>{t.done}</p>
+                  <div>
+                    <button className="btn btn-info" onClick={() => toggleDoneTask(i)}>
+                      {t.done ? '✗' : '🗸'}
+                    </button>
+                    <button className="btn  btn-warning ms-3" onClick={() => removeTask(i)}>
+                      🗑
+                    </button>
+                  </div>
                 </div>
               )
               )}
